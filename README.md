@@ -39,12 +39,12 @@ To get a local copy up and running, follow these steps:
 
 4. **Start the development server**:
     ```sh
-    npm start
+    npm run dev
     ```
 
 ## Usage
 
-Open your browser and navigate to `http://localhost:3000` to view the dashboard.
+Open your browser and navigate to `http://localhost:5173/` to view the dashboard.
 
 ## Contributing
 
