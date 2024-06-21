@@ -30,7 +30,7 @@ app.use("/product", productRoutes);
 app.use("/transaction", transactionRoutes);
 
 // MONGOOSE SETUP
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 10000;
 
 if (!process.env.MONGO_URL) {
   console.error('MONGO_URL environment variable is not set');
