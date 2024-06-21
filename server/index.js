@@ -14,31 +14,37 @@ import Transaction from "./models/Transaction.js";
 import { kpis, products, transactions } from "./data/data.js";
 
 // CONFIGURATIONS
-dotenv.config()
+dotenv.config();
 const app = express();
-app.use(express.json())
+app.use(express.json());
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-app.use(morgan("common"))
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: false }))
-app.use(cors())
+app.use(morgan("common"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cors());
 
-// ROUTES 
+// ROUTES
 app.use("/kpi", kpiRoutes);
 app.use("/product", productRoutes);
 app.use("/transaction", transactionRoutes);
 
 // MONGOOSE SETUP
 const PORT = process.env.PORT || 8000;
+
+if (!process.env.MONGO_URL) {
+  console.error('MONGO_URL environment variable is not set');
+  process.exit(1);
+}
+
 mongoose
-    .connect(process.env.MONGO_URL)
-    .then(async () => {
-        app.listen(PORT, () => console.log(`The server port is: ${PORT}`));
-        // Add data one time only or as needed
-        // await mongoose.connection.db.dropDatabase();
-        // KPI.insertMany(kpis);
-        // Product.insertMany(products);
-        // Transaction.insertMany(transactions);
-    })
-    .catch((error) => console.log(`${error} did not connect`));
+  .connect(process.env.MONGO_URL)
+  .then(async () => {
+    app.listen(PORT, () => console.log(`Server is running on port: ${PORT}`));
+    // Add data one time only or as needed
+    // await mongoose.connection.db.dropDatabase();
+    // KPI.insertMany(kpis);
+    // Product.insertMany(products);
+    // Transaction.insertMany(transactions);
+  })
+  .catch((error) => console.log(`${error} did not connect`));
